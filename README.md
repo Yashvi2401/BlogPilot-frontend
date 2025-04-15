@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Project
 
-## Getting Started
+## Project Demo
 
-First, run the development server:
+Watch the project demo here: [Loom Video Link](https://www.loom.com/share/33c15cec7ead414ba725df35d76dc956?sid=83ca4f17-0039-4f53-8cfb-c37b299011ec)
+
+## Live Demo
+
+Access the live application here: [Deployment Link](https://blog-pilot.vercel.app)
+
+## Project Overview
+
+This is a modern web application built with Next.js, designed to provide a seamless user experience with a responsive interface. The project focuses on performance optimization and follows modern web development best practices.
+
+Our application is built with a focus on scalability and maintainability, utilizing the latest features of Next.js and React. The project implements a component-based architecture that promotes code reusability and separation of concerns. With Tailwind CSS integration, we've created a consistent and responsive design system that works across all device sizes.
+
+The application features optimized performance through server-side rendering capabilities of Next.js, ensuring fast initial page loads and improved SEO. We've also implemented modern development practices including hot module replacement for faster development cycles and automated code quality checks to maintain high code standards.
+
+## Tech Stack
+
+- Next.js 15.3.0
+- React 19.0.0
+- Tailwind CSS 4
+- React Icons 5.5.0
+- Turbopack for development
+
+## Setup Instructions
+
+1. Clone the repository:
+
+```bash
+git clone [your-repository-url]
+cd frontend
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
