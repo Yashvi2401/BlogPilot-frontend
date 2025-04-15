@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { registerUser, loginUser } from "../../services/api";
 
 export default function Register() {
   const router = useRouter();
@@ -36,17 +37,28 @@ export default function Register() {
     }
 
     try {
-      // In a real application, this would be an API call to register
-      // For now, we'll simulate a successful registration after a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Register the user
+      const userData = {
+        username: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
       
-      // Simulate successful registration
+      const registerResponse = await registerUser(userData);
+      
+      // After successful registration, automatically log in
+      const loginResponse = await loginUser(formData.email, formData.password);
+      
+      // Store the token and username in localStorage
+      localStorage.setItem("access_token", loginResponse.access_token);
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("username", formData.name);
       
       // Redirect to dashboard
       router.push("/dashboard");
     } catch (err) {
       setError("Registration failed. Please try again.");
+      console.error("Registration error:", err);
     } finally {
       setLoading(false);
     }

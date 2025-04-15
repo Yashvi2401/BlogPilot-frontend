@@ -115,12 +115,18 @@ export default function Home() {
                 <p className="mt-4 text-lg text-pink-100">
                   Join BlogPilot today and experience the power of AI-assisted blogging.
                 </p>
-                <div className="mt-8">
+                <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
                   <Link
                     href="/register"
                     className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-pink-50 transition-colors duration-200 shadow-lg transform hover:-translate-y-1 hover:shadow-xl"
                   >
                     Sign up for free
+                  </Link>
+                  <Link
+                    href="/blogs"
+                    className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors duration-200 shadow-lg transform hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    Explore Blogs
                   </Link>
                 </div>
               </div>

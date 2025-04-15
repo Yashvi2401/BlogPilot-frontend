@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { loginUser, getUserByEmail } from "../../services/api";
 
 export default function Login() {
   const router = useRouter();
@@ -27,17 +28,25 @@ export default function Login() {
     setError("");
 
     try {
-      // In a real application, this would be an API call to login
-      // For now, we'll simulate a successful login after a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await loginUser(formData.email, formData.password);
       
-      // Simulate successful login
+      // Store the token in localStorage
+      localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("isLoggedIn", "true");
+      
+      // Fetch user details and store username
+      try {
+        const userDetails = await getUserByEmail(formData.email);
+        localStorage.setItem("username", userDetails.username);
+      } catch (userError) {
+        console.error("Error fetching user details:", userError);
+      }
       
       // Redirect to dashboard
       router.push("/dashboard");
     } catch (err) {
       setError("Invalid email or password. Please try again.");
+      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }
@@ -79,7 +88,7 @@ export default function Login() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary transition-colors duration-200"
+                className=" w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 text-gray-700 focus:outline-none focus:ring-primary focus:border-primary transition-colors duration-200"
                 placeholder="your.email@example.com"
               />
             </div>
@@ -98,7 +107,7 @@ export default function Login() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary transition-colors duration-200"
+                className="text-gray-700 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary transition-colors duration-200"
                 placeholder="••••••••"
               />
             </div>

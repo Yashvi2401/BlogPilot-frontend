@@ -30,15 +30,29 @@ export default function EditBlogPost() {
     const fetchBlog = async () => {
       setLoadingBlog(true);
       try {
+        console.log(`Attempting to fetch blog with ID: ${params.id}`);
         const blog = await getBlogById(params.id);
-        setFormData({
-          title: blog.title || "",
-          content: blog.content || "",
-          tags: blog.tags || "",
-        });
+        console.log('Blog data received:', blog);
+        
+        if (!blog) {
+          console.error('Blog data is null or undefined');
+          setError('Blog data could not be loaded');
+          setLoadingBlog(false);
+          return;
+        }
+        
+        // Set default values if properties are missing
+        const formValues = {
+          title: blog.title || '',
+          content: blog.content || '',
+          tags: blog.tags || '',
+        };
+        
+        console.log('Setting form data to:', formValues);
+        setFormData(formValues);
       } catch (err) {
-        console.error("Error fetching blog:", err);
-        setError("Failed to load blog. Please try again later.");
+        console.error("Error fetching blog for edit:", err);
+        setError(`Failed to load blog: ${err.message || 'Unknown error'}`);
       } finally {
         setLoadingBlog(false);
       }
@@ -46,6 +60,10 @@ export default function EditBlogPost() {
 
     if (params.id) {
       fetchBlog();
+    } else {
+      console.error('No blog ID provided in params');
+      setError('No blog ID provided');
+      setLoadingBlog(false);
     }
   }, [params.id]);
 
@@ -61,21 +79,36 @@ export default function EditBlogPost() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    
+    // Trim values for validation
+    const trimmedTitle = formData.title.trim();
+    const trimmedContent = formData.content.trim();
+    
+    console.log("Submitting form data:", {...formData, title: trimmedTitle, content: trimmedContent});
 
-    if (!formData.title.trim()) {
+    if (!trimmedTitle) {
       setError("Title is required");
       setLoading(false);
       return;
     }
 
-    if (!formData.content.trim()) {
+    if (!trimmedContent) {
       setError("Content is required");
       setLoading(false);
       return;
     }
+    
+    // Ensure we're submitting trimmed data
+    const submitData = {
+      ...formData,
+      title: trimmedTitle,
+      content: trimmedContent
+    };
 
     try {
-      await updateBlog(params.id, formData);
+      console.log(`Attempting to update blog with ID: ${params.id}`);
+      await updateBlog(params.id, submitData);
+      console.log("Blog update successful, redirecting to dashboard");
       router.push("/dashboard");
     } catch (err) {
       console.error("Error updating blog:", err);

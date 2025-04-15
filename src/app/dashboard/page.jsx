@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getBlogs, deleteBlog } from "@/services/api";
+import { getUserBlogs, deleteBlog } from "@/services/api";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -29,15 +29,15 @@ export default function Dashboard() {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        const response = await getBlogs();
+        const response = await getUserBlogs();
         const userBlogs = response.items || [];
         setBlogs(userBlogs);
         setStats({
           totalBlogs: userBlogs.length,
         });
       } catch (err) {
-        console.error("Error fetching blogs:", err);
-        setError("Failed to load blogs. Please try again later.");
+        console.error("Error fetching user blogs:", err);
+        setError("Failed to load your blogs. Please try again later.");
       } finally {
         setLoading(false);
       }

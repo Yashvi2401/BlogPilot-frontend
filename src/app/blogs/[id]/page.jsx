@@ -18,7 +18,7 @@ export default function BlogPost() {
   useEffect(() => {
     const fetchBlog = async () => {
       setLoading(true);
-      try {
+      try { 
         const data = await getBlogById(params.id);
         setBlog(data);
       } catch (err) {
@@ -114,7 +114,7 @@ export default function BlogPost() {
             {blog.title}
           </h1>
           <div className="flex items-center mb-8 text-gray-500">
-            <span>{formatDate(blog.created_at || new Date())}</span>
+            <span>{blog.created_at ? formatDate(blog.created_at) : 'No date available'}</span>
             <span className="mx-2">•</span>
             <span>By {blog.author}</span>
           </div>
@@ -162,23 +162,23 @@ export default function BlogPost() {
         
         {/* Blog Content */}
         <article className="prose prose-lg max-w-none prose-primary animate-fade-in">
-          <div dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }} />
+          <div dangerouslySetInnerHTML={{ __html: blog.content ? blog.content.replace(/\n/g, '<br />') : '' }} />
         </article>
         
         {/* Share Section */}
         <div className="mt-12 pt-8 border-t border-gray-200 animate-fade-in">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Share this article</h3>
           <div className="flex space-x-4">
-            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
+            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title || '')}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
               <FaTwitter size={24} />
             </a>
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-700 transition-colors duration-200">
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-700 transition-colors duration-200">
               <FaFacebook size={24} />
             </a>
-            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors duration-200">
+            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors duration-200">
               <FaLinkedin size={24} />
             </a>
-            <a href={`mailto:?subject=${encodeURIComponent(blog.title)}&body=${encodeURIComponent(`Check out this article: ${window.location.href}`)}`} className="text-gray-400 hover:text-red-500 transition-colors duration-200">
+            <a href={`mailto:?subject=${encodeURIComponent(blog.title || '')}&body=${encodeURIComponent(`Check out this article: ${typeof window !== 'undefined' ? window.location.href : ''}`)}`} className="text-gray-400 hover:text-red-500 transition-colors duration-200">
               <FaEnvelope size={24} />
             </a>
           </div>

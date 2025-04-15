@@ -34,8 +34,6 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
     --primary: #ec4899;
     --primary-light: #db2777;
     --primary-dark: #be185d;
